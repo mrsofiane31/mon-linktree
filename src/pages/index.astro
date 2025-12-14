@@ -1,0 +1,75 @@
+---
+// On récupère tous les liens créés via le CMS
+// Note: Au début il n'y en a aucun, c'est normal !
+const allLinks = await Astro.glob('../content/links/*.md');
+---
+
+<html lang="fr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Mon LinkTree</title>
+    <style>
+      body {
+        font-family: 'Arial', sans-serif;
+        background: #f3f4f6;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        padding: 2rem;
+        min-height: 100vh;
+      }
+      .container {
+        max-width: 400px;
+        width: 100%;
+        text-align: center;
+      }
+      .profile {
+        width: 100px;
+        height: 100px;
+        background-color: #ddd;
+        border-radius: 50%;
+        margin: 0 auto 1.5rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 2rem;
+      }
+      h1 { margin-bottom: 2rem; color: #333; }
+      
+      .link-card {
+        display: block;
+        padding: 1rem;
+        margin-bottom: 1rem;
+        text-decoration: none;
+        color: white;
+        background-color: #3b82f6; /* Couleur par défaut */
+        border-radius: 50px;
+        font-weight: bold;
+        transition: transform 0.2s, box-shadow 0.2s;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      }
+      .link-card:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 8px rgba(0,0,0,0.15);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="profile">👤</div>
+      <h1>Mes Liens</h1>
+
+      <!-- C'est ici que la magie opère : on affiche chaque lien -->
+      {allLinks.map((link) => (
+        <a href={link.frontmatter.url} class="link-card" style={`background-color: ${link.frontmatter.color}`}>
+          {link.frontmatter.title}
+        </a>
+      ))}
+      
+      {allLinks.length === 0 && (
+        <p style="color: #666;">Aucun lien pour le moment.<br>Allez dans /admin pour en ajouter !</p>
+      )}
+    </div>
+  </body>
+</html>

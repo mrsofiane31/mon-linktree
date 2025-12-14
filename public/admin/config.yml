@@ -1,0 +1,17 @@
+backend:
+  name: git-gateway
+  branch: main
+
+media_folder: "public/images"
+public_folder: "/images"
+
+collections:
+  - name: "links"
+    label: "Mes Liens"
+    folder: "src/content/links"
+    create: true
+    slug: "{{slug}}"
+    fields:
+      - {label: "Titre du bouton", name: "title", widget: "string"}
+      - {label: "URL de destination", name: "url", widget: "string"}
+      - {label: "Couleur de fond", name: "color", widget: "color", default: "#3b82f6"}
